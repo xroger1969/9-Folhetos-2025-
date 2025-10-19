@@ -6,80 +6,54 @@
   <title>Folhetos para Partilhar na Pregação</title>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="stylesheet" href="assets/style.css" />
-  <!-- Load QRCode library from a CDN. This small script generates the QR codes on the fly. -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Noto+Sans&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 </head>
+
 <body>
   <header>
     <h1>Folhetos para Partilhar na Pregação</h1>
   </header>
-  <div class="container">
-    <p>Selecione um folheto para abrir ou utilize o código QR para o partilhar. Estes folhetos foram
-      lançados em outubro de 2025 e estão disponíveis em português de Portugal.</p>
-    <div class="grid" id="folhetos-grid"><!-- Cards will be injected here --></div>
-  </div>
+
+  <main class="container">
+    <p>Selecione um folheto para abrir ou utilize o código QR para o partilhar.<br>
+    Estes folhetos foram lançados em outubro de 2025 e estão disponíveis em português de Portugal.</p>
+
+    <div class="grid" id="folhetos-grid"></div>
+  </main>
+
   <footer>
-    <p>Site não oficial. Conteúdos e links fornecidos para facilitar o ministério.</p>
+    <p>Site não oficial — apenas para uso pessoal no ministério das Testemunhas de Jeová.</p>
   </footer>
+
   <script>
-    // Espera o carregamento do QRCode.js antes de gerar os códigos.
     document.addEventListener('DOMContentLoaded', function() {
-      // Lista de folhetos (título e URL) para gerar cards e QRs.
       const folhetos = [
-        {
-          titulo: 'É possível viver feliz para sempre?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/futuro/folheto/'
-        },
-        {
-          titulo: 'Como é que a sua família pode ser feliz?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/familia/folheto/'
-        },
-        {
-          titulo: 'Quem é o verdadeiro Deus?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/deus/folheto/'
-        },
-        {
-          titulo: 'Há alguém que ouça as nossas orações?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/oracao/folheto/'
-        },
-        {
-          titulo: 'Será que os conselhos de Jesus ainda funcionam?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/jesus/folheto/'
-        },
-        {
-          titulo: 'Como é que o Reino de Deus vai resolver os nossos problemas?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/reino-de-deus-2/folheto/'
-        },
-        {
-          titulo: 'É possível viver sem dor nem tristeza?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/sofrimento/folheto/'
-        },
-        {
-          titulo: 'As pessoas que já perdemos podem voltar a viver?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/morte/folheto/'
-        },
-        {
-          titulo: 'Será que Deus aceita todas as religiões?',
-          url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/religiao/folheto/'
-        }
+        { titulo: 'É possível viver feliz para sempre?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/futuro/folheto/' },
+        { titulo: 'Como é que a sua família pode ser feliz?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/familia/folheto/' },
+        { titulo: 'Quem é o verdadeiro Deus?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/deus/folheto/' },
+        { titulo: 'Há alguém que ouça as nossas orações?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/oracao/folheto/' },
+        { titulo: 'Será que os conselhos de Jesus ainda funcionam?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/jesus/folheto/' },
+        { titulo: 'Como é que o Reino de Deus vai resolver os nossos problemas?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/reino-de-deus-2/folheto/' },
+        { titulo: 'É possível viver sem dor nem tristeza?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/sofrimento/folheto/' },
+        { titulo: 'As pessoas que já perdemos podem voltar a viver?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/morte/folheto/' },
+        { titulo: 'Será que Deus aceita todas as religiões?', url: 'https://www.jw.org/pt-pt/biblioteca/folhetos/religiao/folheto/' }
       ];
-      // Elemento grid onde serão inseridos os cards
+
       const grid = document.getElementById('folhetos-grid');
-      folhetos.forEach((folheto, index) => {
-        // Cria o cartão
+      folhetos.forEach((f, i) => {
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
-          <h2><a href="${folheto.url}" target="_blank" rel="noopener noreferrer">${folheto.titulo}</a></h2>
-          <div class="qr" id="qr-${index}"></div>
-          <a href="${folheto.url}" target="_blank" rel="noopener noreferrer">Abrir folheto</a>
+          <h2><a href="${f.url}" target="_blank" rel="noopener noreferrer">${f.titulo}</a></h2>
+          <div class="qr" id="qr-${i}"></div>
+          <a href="${f.url}" target="_blank" rel="noopener noreferrer">Abrir folheto</a>
         `;
         grid.appendChild(card);
-        // Gera o QR code dentro do cartão
-        const qrobj = new QRCode(document.getElementById(`qr-${index}`), {
-          text: folheto.url,
-          width: 150,
-          height: 150,
+        new QRCode(document.getElementById(`qr-${i}`), {
+          text: f.url,
+          width: 130,
+          height: 130,
           colorDark: '#0C3B6E',
           colorLight: '#ffffff',
           correctLevel: QRCode.CorrectLevel.H
